@@ -1,5 +1,7 @@
+var data;
+var valid = false;
+
 function setup() {
-  let upload = createFileInput(file => analyse(file.data)).parent("#upload");
   let zone = select("#dropzone");
   zone.dragOver(() => zone.addClass("border-dark"));
   zone.dragLeave(() => zone.removeClass("border-dark"));
@@ -14,14 +16,35 @@ function setup() {
       let types = ["bytes", "KB", "MB", "GB", "TB"];
       size += types[byte];
       zone.html(file.name + " / " + size);
-      analyse(file.data);
-    } else
+      valid = true;
+      data = file.data;
+    } else {
       zone.html("sorry! only text files are accepted!");
+      valid = false;
+    }
+  });
+  let upload = createFileInput(file => {
+    if (file.type == "text") {
+      valid = true;
+      data = file.data;
+    } else {
+      alert("sorry! only text files are accepted!");
+      valid = false;
+    }
+  }).parent("#upload");
+  let submit = select("#submit");
+  submit.mousePressed(() => {
+    let textarea = select("textarea");
+    if (textarea.value() !== "")
+      analyse(textarea.value());
+    else if (valid) {
+      analyse(data);
+    }
   });
 }
 
-function analyse(data) {
-  let words = splitTokens(data, /\W/);
+function analyse(text) {
+  let words = splitTokens(text, /\W/);
   let vowels = ["a", "e", "i", "o", "u"];
   let syllables = 0;
   for (word of words) {
@@ -39,7 +62,7 @@ function analyse(data) {
         prev = false;
     }
   }
-  let sentences = splitTokens(data, ".:;?!");
+  let sentences = splitTokens(text, ".:;?!");
   let flesch = 206.835 - (84.6 * syllables / words.length) - (1.015 * words.length / sentences.length);
   let test = selectAll(".result");
   test[0].html(syllables);

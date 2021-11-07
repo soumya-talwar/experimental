@@ -4,3 +4,7 @@
   letter-spacing: 1px;
   text-underline-offset: 0.2rem;
 }
+
+#submit {
+  width: 5rem;
+}

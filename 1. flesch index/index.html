@@ -16,13 +16,14 @@
     <div class="container">
       <div class="row">
         <div class="col-6 offset-3 d-flex flex-column justify-column-center p-5">
-          <div id="upload">
-            <p class="text-decoration-underline text-center">Flesch-Kincaid Readability Ease Test</p>
-            <p id="dropzone" class="border p-5 mt-3 text-center">drop your file here :D</p>
-          </div>
+          <p class="text-decoration-underline text-center mb-5">Flesch-Kincaid Readability Ease Test</p>
+          <p>Select a file to perform the test on:</p>
+          <p id="dropzone" class="border p-5 text-center">drop your file here :D</p>
+          <div id="upload"></div>
           <p class="mt-5">Or paste the text manually:</p>
           <textarea rows="5"></textarea>
-          <p class="mt-5">Total Syllables: <span class="result"></span></p>
+          <button id="submit" class="btn btn-dark btn-sm my-5" type="submit">submit</button>
+          <p>Total Syllables: <span class="result"></span></p>
           <p>Total Words: <span class="result"></span></p>
           <p>Total Sentences: <span class="result"></span></p>
           <p>Flesch Index: <span class="result"></span></p>
