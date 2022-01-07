@@ -28,13 +28,13 @@ function setup() {
 }
 
 function draw() {
-  background("#faedcd");
+  background(255);
   if (!pause)
     snake.update();
-  fill("#bc6c25");
+  fill(150);
   noStroke();
   rect(food.x * unit, food.y * unit, unit, unit);
-  fill("#606c38");
+  fill(0);
   for (let i = 0; i < snake.length; i++) {
     rect(snake.body[i].x * unit, snake.body[i].y * unit, unit, unit);
   }
