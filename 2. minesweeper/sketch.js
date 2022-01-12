@@ -87,7 +87,7 @@ class Cell {
           noLoop();
         } else if (this.count == 0)
           this.reveal();
-      } else {
+      } else if (button == "right") {
         if (!this.marked) {
           this.marked = true;
           count--;
