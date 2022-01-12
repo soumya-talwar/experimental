@@ -1,0 +1,9 @@
+* {
+  font-family: "Inter";
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+#canvas {
+  height: 100vh;
+}
