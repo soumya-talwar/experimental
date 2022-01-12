@@ -103,8 +103,11 @@ class Cell {
               noLoop();
             }
           }
-        } else
+        } else {
           this.marked = false;
+          count++;
+          $("#count").html(count);
+        }
       }
     }
   }
