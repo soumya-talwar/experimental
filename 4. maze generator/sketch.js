@@ -1,35 +1,46 @@
 var cells = [];
 var unit = 15;
 var rows, columns;
+var directions = ["top", "left", "right", "bottom"];
+var current;
+var route = [];
 var pause = false;
+var end = false;
 
 function setup() {
-  createCanvas(windowWidth, $("#canvas").height()).parent("canvas");
-  background(240);
-  frameRate(10);
-  rows = height / unit + 1;
-  columns = width / unit + 1;
+  createCanvas(windowWidth, 500).parent("canvas");
+  rows = floor(height / unit);
+  columns = floor(width / unit);
   for (let i = 0; i < rows; i++) {
     cells[i] = [];
     for (let j = 0; j < columns; j++) {
       cells[i][j] = new Cell(i, j);
     }
   }
+  current = cells[0][0];
+  current.visited = true;
   prepare();
 }
 
 function prepare() {
   for (let row of cells) {
     for (let cell of row) {
+      let count = 0;
       for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-          if (i == 0 && j == 0)
-            continue;
-          let row = cell.rindex + i;
-          let column = cell.cindex + j;
-          if (row < 0 || row > rows - 1 || column < 0 || column > columns - 1)
-            continue;
-          cell.neighbours.push(cells[row][column]);
+          if (abs(i + j) == 1) {
+            let row = i + cell.rindex;
+            let column = j + cell.cindex;
+            let neighbour;
+            if (row < 0 || row >= rows || column < 0 || column >= columns)
+              neighbour = undefined;
+            else
+              neighbour = cells[row][column];
+            cell.neighbours.push({
+              direction: directions[count++],
+              cell: neighbour
+            });
+          }
         }
       }
     }
@@ -38,23 +49,21 @@ function prepare() {
 
 function draw() {
   if (!pause) {
+    current.update();
     for (let row of cells) {
       for (let cell of row) {
-        cell.update();
         cell.display();
       }
+    }
+    if (!end) {
+      fill("#48cae4");
+      rect(current.cpos, current.rpos, unit, unit);
     }
   }
 }
 
-function mouseDragged() {
-  let row = floor(mouseY / unit);
-  let column = floor(mouseX / unit);
-  cells[row][column].pressed();
-}
-
 function keyPressed() {
-  if (keyCode == 32)
+  if (keyCode === 32)
     pause = !pause;
 }
 
@@ -64,41 +73,57 @@ class Cell {
     this.cindex = column;
     this.rpos = row * unit;
     this.cpos = column * unit;
-    this.dead = true;
-    this.color = "#eeeeee";
+    this.walls = [{
+        broken: false,
+        index: [this.cpos, this.rpos, this.cpos + unit, this.rpos]
+      },
+      {
+        broken: false,
+        index: [this.cpos, this.rpos, this.cpos, this.rpos + unit]
+      },
+      {
+        broken: false,
+        index: [this.cpos + unit, this.rpos, this.cpos + unit, this.rpos + unit]
+      },
+      {
+        broken: false,
+        index: [this.cpos, this.rpos + unit, this.cpos + unit, this.rpos + unit]
+      }
+    ];
     this.neighbours = [];
+    this.visited = false;
   }
 
   update() {
-    let count = 0;
+    let unvisited = [];
     for (let neighbour of this.neighbours) {
-      if (!neighbour.dead)
-        count++;
+      if (neighbour.cell && !neighbour.cell.visited)
+        unvisited.push(neighbour);
     }
-    if (this.dead) {
-      if (count == 3) {
-        this.dead = false;
-        this.color = "#ffb5a7";
-      } else
-        this.color = "#eeeeee";
-    } else if (!this.dead) {
-      if (count < 2 || count > 3) {
-        this.dead = true;
-        this.color = "#fec89a";
-      } else
-        this.color = "#fcd5ce";
-    }
+    if (unvisited.length > 0) {
+      let next = random(unvisited);
+      let index = directions.indexOf(next.direction);
+      this.walls[index].broken = true;
+      next.cell.walls[3 - index].broken = true;
+      current = next.cell;
+      current.visited = true;
+      route.push(current);
+    } else if (route.length > 0)
+      current = route.pop();
+    else
+      end = true;
   }
 
   display() {
-    stroke("#cecece");
-    fill(this.color);
+    stroke("#48cae4");
+    for (let wall of this.walls) {
+      if (!wall.broken)
+        line(wall.index[0], wall.index[1], wall.index[2], wall.index[3]);
+    }
+    noStroke();
+    fill("#EDFAFD");
+    if (this.visited)
+      fill("#BFECF4");
     rect(this.cpos, this.rpos, unit, unit);
-  }
-
-  pressed() {
-    this.dead = false;
-    this.color = "#ffb5a7";
-    console.log(this);
   }
 }

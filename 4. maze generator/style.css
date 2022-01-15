@@ -1,9 +1,14 @@
 * {
-  font-family: "Inter";
+  font-family: inter;
   font-size: 0.8rem;
   letter-spacing: 1px;
 }
 
-#canvas {
-  height: 75vh;
+#landing {
+  height: 100vh;
+}
+
+@font-face {
+  font-family: inter;
+  src: url(fonts/inter.ttf);
 }
