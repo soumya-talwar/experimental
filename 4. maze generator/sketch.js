@@ -5,10 +5,9 @@ var directions = ["top", "left", "right", "bottom"];
 var current;
 var route = [];
 var pause = false;
-var end = false;
 
 function setup() {
-  createCanvas(windowWidth, 500).parent("canvas");
+  createCanvas($(window).width() - 300, $("#canvas").height()).parent("canvas");
   rows = floor(height / unit);
   columns = floor(width / unit);
   for (let i = 0; i < rows; i++) {
@@ -55,10 +54,8 @@ function draw() {
         cell.display();
       }
     }
-    if (!end) {
-      fill("#48cae4");
-      rect(current.cpos, current.rpos, unit, unit);
-    }
+    fill(220);
+    rect(current.cpos, current.rpos, unit, unit);
   }
 }
 
@@ -110,20 +107,18 @@ class Cell {
       route.push(current);
     } else if (route.length > 0)
       current = route.pop();
-    else
-      end = true;
   }
 
   display() {
-    stroke("#48cae4");
+    stroke(150);
     for (let wall of this.walls) {
       if (!wall.broken)
         line(wall.index[0], wall.index[1], wall.index[2], wall.index[3]);
     }
     noStroke();
-    fill("#EDFAFD");
+    fill(240);
     if (this.visited)
-      fill("#BFECF4");
+      fill(220);
     rect(this.cpos, this.rpos, unit, unit);
   }
 }

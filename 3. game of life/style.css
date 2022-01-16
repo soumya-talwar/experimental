@@ -4,8 +4,16 @@
   letter-spacing: 1px;
 }
 
+#landing {
+  height: 100vh;
+}
+
 #canvas {
-  height: 75vh;
+  height: 70vh;
+}
+
+a, a:hover {
+  color: #000;
 }
 
 @font-face {

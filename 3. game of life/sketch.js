@@ -5,10 +5,9 @@ var pause = false;
 
 function setup() {
   createCanvas(windowWidth, $("#canvas").height()).parent("canvas");
-  background(240);
   frameRate(10);
-  rows = height / unit + 1;
-  columns = width / unit + 1;
+  rows = floor(height / unit);
+  columns = floor(width / unit);
   for (let i = 0; i < rows; i++) {
     cells[i] = [];
     for (let j = 0; j < columns; j++) {

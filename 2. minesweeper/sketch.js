@@ -7,16 +7,15 @@ var won = false;
 var font;
 
 function preload() {
-  font = loadFont("assets/inter.ttf");
+  font = loadFont("fonts/inter.ttf");
 }
 
 function setup() {
   createCanvas(1000, 500).parent("canvas");
-  background(240);
   $("canvas").contextmenu(e => e.preventDefault());
   $("#count").html(count);
-  rows = height / unit;
-  columns = width / unit;
+  rows = floor(height / unit);
+  columns = floor(width / unit);
   for (let i = 0; i < rows; i++) {
     cells[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -141,6 +140,7 @@ function draw() {
         fill(255);
         rect(cell.cpos, cell.rpos, unit, unit);
         if (cell.count > 0) {
+          noStroke();
           fill(0);
           textFont(font);
           textAlign(CENTER, CENTER);

@@ -1,7 +1,6 @@
-let unit = 15;
-let columns, rows;
-
-let snake = {
+var unit = 15;
+var columns, rows;
+var snake = {
   xspeed: 1,
   yspeed: 0,
   length: 1,
@@ -10,33 +9,32 @@ let snake = {
     y: 0
   }]
 };
-
-let food = {
+var food = {
   x: 0,
   y: 0
 }
-
-let pause = false;
+var pause = false;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight).parent("landing");
+  createCanvas($(window).width() - 300, $("#canvas").height()).parent("canvas");
   frameRate(10);
-  columns = width / unit;
-  rows = height / unit;
+  columns = floor(width / unit);
+  rows = floor(height / unit);
+  snake.body[0].y = floor(rows / 2);
   food.x = floor(random(columns));
   food.y = floor(random(rows));
 }
 
 function draw() {
-  background(255);
+  background(245);
   if (!pause)
     snake.update();
   fill(150);
   noStroke();
   rect(food.x * unit, food.y * unit, unit, unit);
   fill(0);
-  for (let i = 0; i < snake.length; i++) {
-    rect(snake.body[i].x * unit, snake.body[i].y * unit, unit, unit);
+  for (let body of snake.body) {
+    rect(body.x * unit, body.y * unit, unit, unit);
   }
 }
 
@@ -50,7 +48,7 @@ function keyPressed() {
   else if (keyCode == RIGHT_ARROW)
     snake.turn(1, 0);
   else if (keyCode == 32)
-    toggle();
+    pause = !pause;
 }
 
 snake.update = function() {
@@ -88,11 +86,4 @@ snake.update = function() {
 snake.turn = function(turnx, turny) {
   snake.xspeed = turnx;
   snake.yspeed = turny;
-}
-
-function toggle() {
-  if (pause)
-    pause = false;
-  else
-    pause = true;
 }
