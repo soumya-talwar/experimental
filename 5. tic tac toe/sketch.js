@@ -35,7 +35,7 @@ function pressed() {
   if (turns % 2 == 1 && square.empty && !over) {
     play(square, "player");
     if (empty.length > 0 && !over)
-      setTimeout(() => play(random(empty), "machine"), 1000);
+      setTimeout(() => play(random(empty), "machine"), 500);
   }
 }
 
@@ -100,6 +100,7 @@ function check() {
 }
 
 function draw() {
+  strokeWeight(6);
   line(0, unit, size, unit);
   line(0, unit * 2, size, unit * 2);
   line(unit, 0, unit, size);
