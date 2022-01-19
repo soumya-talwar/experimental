@@ -1,0 +1,18 @@
+* {
+  font-family: inter;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+#landing {
+  height: 100vh;
+}
+
+a, a:hover {
+  color: #000;
+}
+
+@font-face {
+  font-family: inter;
+  src: url(fonts/inter.ttf);
+}
