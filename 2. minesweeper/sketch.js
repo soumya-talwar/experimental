@@ -3,6 +3,8 @@ var unit = 25;
 var rows, columns;
 var count = 100;
 var mines = [];
+var empty = [];
+var start = false;
 var won = false;
 var font;
 
@@ -20,22 +22,17 @@ function setup() {
     cells[i] = [];
     for (let j = 0; j < columns; j++) {
       cells[i][j] = new Cell(i, j);
+      empty.push(cells[i][j]);
     }
   }
-  prepare();
 }
 
 function prepare() {
   for (let i = 0; i < count; i++) {
-    while (true) {
-      let row = random(cells);
-      let cell = random(row);
-      if (!cell.mine) {
-        cell.mine = true;
-        mines.push(cell);
-        break;
-      }
-    }
+    let index = floor(random(empty.length));
+    empty[index].mine = true;
+    mines.push(empty[index]);
+    empty.splice(index, 1);
   }
   for (let row of cells) {
     for (let cell of row) {
@@ -154,5 +151,10 @@ function draw() {
 function mousePressed() {
   let row = floor(mouseY / unit);
   let column = floor(mouseX / unit);
+  if (!start) {
+    start = true;
+    empty.splice(empty.findIndex(cell => cell.rindex == row && cell.cindex == column), 1);
+    prepare();
+  }
   cells[row][column].pressed(mouseButton);
 }
