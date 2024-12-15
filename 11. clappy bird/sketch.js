@@ -47,12 +47,12 @@ function draw() {
       for (let [index, obstacle] of obstacles[i].entries()) {
         fill("#95CD41");
         rect(obstacle.left, obstacle.top, thick, obstacle.bottom - obstacle.top);
-        // if (!(bird.left < obstacle.left && bird.left + 40 < obstacle.left) && !(bird.left > obstacle.left + thick && bird.left + 40 > obstacle.left + thick)) {
-        //   if (index == 0 && bird.top < obstacle.bottom)
-        //     reset();
-        //   else if (index == 1 && (bird.top + 32) > obstacle.top)
-        //     reset();
-        // }
+        if (!(bird.left < obstacle.left && bird.left + 40 < obstacle.left) && !(bird.left > obstacle.left + thick && bird.left + 40 > obstacle.left + thick)) {
+          if (index == 0 && bird.top < obstacle.bottom)
+            reset();
+          else if (index == 1 && (bird.top + 32) > obstacle.top)
+            reset();
+        }
         obstacle.left -= speed;
         if (obstacle.left + thick < 0) {
           obstacles.splice(i, 1);
