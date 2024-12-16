@@ -1,0 +1,29 @@
+* {
+  font-family: inter;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+#landing {
+  height: 100vh;
+}
+
+#canvas {
+  height: 70vh;
+}
+
+a,
+a:hover {
+  color: #000;
+}
+
+#restart img {
+  height: 50px;
+  width: auto;
+  cursor: pointer;
+}
+
+@font-face {
+  font-family: inter;
+  src: url(fonts/inter.ttf);
+}
