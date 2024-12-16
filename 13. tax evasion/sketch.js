@@ -1,5 +1,5 @@
 var frame = 0;
-var speed = 10;
+var speed = 5;
 var dino1, dino2, dino3, cactus, cloud;
 var dino = {};
 var taxes = [];
