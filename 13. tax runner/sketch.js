@@ -108,9 +108,9 @@ function draw() {
 				if (dino.top + dinoH > taxes[i].top) {
 					stop = true;
 					dino.current = 2;
-					// setTimeout(() => {
-					// 	window.location.href = "https://www.incometax.gov.in/";
-					// }, 500);
+					setTimeout(() => {
+						window.location.href = "https://www.incometax.gov.in/";
+					}, 500);
 				}
 			}
 			taxes[i].left -= speed;
