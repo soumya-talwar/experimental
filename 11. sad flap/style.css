@@ -1,29 +1,63 @@
 * {
-  font-family: inter;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+	font-family: inter;
+	letter-spacing: 1px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 #landing {
-  height: 100vh;
+	height: 100dvh;
+	text-align: center;
 }
 
 #canvas {
-  height: 70vh;
+	width: 100%;
+	max-width: 1000px;
+}
+
+canvas {
+	display: block;
+	margin: auto;
+}
+
+#title {
+	font-size: 0.8rem;
+}
+
+#result {
+	margin-top: 1rem;
+	font-size: 0.8rem;
+	padding: 0 2rem;
 }
 
 a,
 a:hover {
-  color: #000;
+	color: #000;
+	font-size: 0.8rem;
 }
 
 .clickable {
-  text-decoration: underline;
-  text-underline-offset: 1px;
-  cursor: pointer;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	#title {
+		font-size: 0.9rem;
+	}
+
+	#result {
+		font-size: 0.9rem;
+	}
+
+	a,
+	a:hover {
+		font-size: 0.9rem;
+	}
 }
 
 @font-face {
-  font-family: inter;
-  src: url(fonts/inter.ttf);
+	font-family: inter;
+	src: url(fonts/inter.ttf);
 }
